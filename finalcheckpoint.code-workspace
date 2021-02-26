@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "client",
+			"path": "finalcheckpoint-client"
+		},
+		{
+			"name": "server",
+			"path": "finalcheckpoint-server"
+		}
+	],
+	"settings": {}
+}
