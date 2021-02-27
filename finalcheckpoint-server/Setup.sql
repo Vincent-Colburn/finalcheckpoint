@@ -58,3 +58,21 @@ USE finalcheckpoint;
 --     REFERENCES profiles(id)
 --     ON DELETE CASCADE
 -- );
+
+-- CREATE TABLE vaultkeeps
+-- (
+--     id INT AUTO_INCREMENT NOT NULL,
+--     creatorId VARCHAR(255) NOT NULL,
+--     vaultId INT,
+--     keepId INT,
+
+--     PRIMARY KEY(id),
+    
+--     FOREIGN KEY (vaultId)
+--         REFERENCES vaults(id)
+--         ON DELETE CASCADE,
+
+--     FOREIGN KEY (keepId)
+--         REFERENCES keeps(id)
+--         ON DELETE CASCADE
+-- );

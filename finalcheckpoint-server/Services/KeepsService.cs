@@ -61,6 +61,13 @@ namespace finalcheckpoint_server.Services
             return "successfully deleted";
         }
 
+        internal IEnumerable<VaultKeepViewModel> GetKeepsByVaultId(int id)
+        {
+            IEnumerable<VaultKeepViewModel> data = _krepo.GetKeepsByVaultId(id);
+            return data;
+
+        }
+
 
     }
 }

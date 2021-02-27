@@ -18,30 +18,47 @@ namespace finalcheckpoint_server.Controllers
     {
         private readonly VaultsService _vs;
 
-        public VaultsController(VaultsService vs)
+        private readonly KeepsService _ks;
+
+        public VaultsController(VaultsService vs, KeepsService ks)
         {
             _vs = vs;
+            _ks = ks;
         }
 
         // GET vaults by the owner ID
-        [HttpGet]
-        [Authorize]
-        public async Task<ActionResult<Vault>> Get(int id, string email)
-        {
-            try
-            {
-                Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-                email = userInfo.Email;
-                return Ok(_vs.GetAll());
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
+        // [HttpGet]
+        // [Authorize]
+        // public async Task<ActionResult<Vault>> Get(int id, string email)
+        // {
+        //     try
+        //     {
+        //         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        //         email = userInfo.Email;
+        //         return Ok(_vs.GetAll());
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         return BadRequest(e.Message);
+        //     }
+        // }
 
+        // [HttpGet("{id}")]
+        // [Authorize]
+        // public async Task<ActionResult<IEnumerable<Vault>>> GetById(int id)
+        // {
+        //     try
+        //     {
+        //         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        //         return Ok(_vs.GetById(id));
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         return BadRequest(e.Message);
+        //     }
+        // }
 
-
+        // this works and is your back up
         [HttpGet("{id}")]
         [Authorize]
         public async Task<ActionResult<Vault>> GetById(int id)
@@ -126,6 +143,21 @@ namespace finalcheckpoint_server.Controllers
                 return StatusCode(StatusCodes.Status403Forbidden, e.Message);
             }
 
+        }
+
+        [HttpGet("{id}/keeps")]
+        [Authorize]
+        public ActionResult<IEnumerable<VaultKeepViewModel>> GetKeeps(int id)
+        {
+            try
+            {
+                IEnumerable<VaultKeepViewModel> keeps = _ks.GetKeepsByVaultId(id);
+                return keeps;
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

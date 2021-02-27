@@ -17,31 +17,42 @@ namespace finalcheckpoint_server.Services
 
 
 
-        internal IEnumerable<Vault> GetAll()
-        {
+        // internal IEnumerable<Vault> GetAll()
+        // {
 
-            IEnumerable<Vault> vaults = _vrepo.GetAll();
-            return vaults.ToList().FindAll(v => v.IsPrivate);
-            // if (exists == null)
-            // {
-            //     throw new Exception("Invalid Id");
-            // }
-            // return exists;
+        //     IEnumerable<Vault> vaults = _vrepo.GetAll();
+        //     return vaults.ToList().FindAll(v => v.IsPrivate);
+        //     // if (exists == null)
+        //     // {
+        //     //     throw new Exception("Invalid Id");
+        //     // }
+        //     // return exists;
 
-        }
+        // }
+
+        // this doesn't work because it breaks all other functions that need to return a Vault
+        //   internal IEnumerable<Vault> GetById(int id)
+        //         {
+
+        //             IEnumerable<Vault> exists = _vrepo.GetById(id);
+        //             if (exists == null)
+        //             {
+        //                 throw new Exception("Invalid Id");
+        //             }
+        //             return exists.ToList().FindAll(v => v.IsPrivate);
+        //         }
+
+        // // // this works and is your back up
         internal Vault GetById(int id)
         {
 
-            Vault exists = _vrepo.GetById(id);
+            var exists = _vrepo.GetById(id);
             if (exists == null)
             {
                 throw new Exception("Invalid Id");
             }
             return exists;
         }
-
-
-
 
         internal Vault Create(Vault newVault)
         {
@@ -80,7 +91,6 @@ namespace finalcheckpoint_server.Services
             _vrepo.Remove(id);
             return "sucessfully deleted";
         }
-
 
     }
 }

@@ -16,9 +16,12 @@ namespace finalcheckpoint_server.Controllers
     {
         private readonly ProfilesService _ps;
 
-        public AccountController(ProfilesService ps)
+        private readonly VaultsService _vs;
+
+        public AccountController(ProfilesService ps, VaultsService vs)
         {
             _ps = ps;
+            _vs = vs;
         }
 
         [HttpGet]

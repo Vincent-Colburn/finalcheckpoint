@@ -59,12 +59,14 @@ namespace finalcheckpoint_server
 
             // TODO Transient Repositories
             services.AddTransient<VaultsRepository>();
+            services.AddTransient<VaultKeepsRepository>();
             services.AddTransient<ProfilesRepository>();
             services.AddTransient<KeepsRepository>();
 
 
             // TODO Transient Services
             services.AddTransient<VaultsService>();
+            services.AddTransient<VaultKeepsService>();
             services.AddTransient<ProfilesService>();
             services.AddTransient<KeepsService>();
 
