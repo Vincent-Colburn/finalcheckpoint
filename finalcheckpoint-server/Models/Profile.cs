@@ -10,8 +10,8 @@ namespace finalcheckpoint_server.Models
     }
 
     // NOTE[epic=many-to-many] Object used to add the relationship for the many to many
-    // public class ProfilePartyMemberViewModel : Profile
-    // {
-    //     public int PartyMemberId { get; set; }
-    // }
+    public class ProfileKeepModel : Profile
+    {
+        public int ProfileKeepId { get; set; }
+    }
 }

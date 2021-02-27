@@ -12,13 +12,16 @@ namespace finalcheckpoint_server.Controllers
     public class ProfilesController : ControllerBase
     {
         private readonly ProfilesService _service;
-        // private readonly PartiesService _ps;
+        private readonly KeepsService _ks;
 
-        public ProfilesController(ProfilesService service)
+        public ProfilesController(ProfilesService service, KeepsService ks)
         {
             _service = service;
+            _ks = ks;
         }
 
+
+        // This is a get by ID
         [HttpGet("{id}")]
         public ActionResult<Profile> Get(string id)
         {
@@ -32,6 +35,23 @@ namespace finalcheckpoint_server.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet("{id}/keeps")]
+
+        public ActionResult<IEnumerable<Keep>> GetKeepsByProfileId(string id)
+        {
+            try
+            {
+                IEnumerable<Keep> keeps = _ks.GetByProfileId(id);
+                return Ok(keeps);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
 
         // [HttpGet(("{id}/parties"))]
         // [Authorize]

@@ -11,7 +11,6 @@ namespace finalcheckpoint_server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    // REVIEW[epic=Authentication] this tag enforces the user must be logged in
     [Authorize]
     public class AccountController : ControllerBase
     {
@@ -23,7 +22,6 @@ namespace finalcheckpoint_server.Controllers
         }
 
         [HttpGet]
-        // REVIEW[epic=Authentication] async calls must return a System.Threading.Tasks, this is equivalent to a promise in JS
         public async Task<ActionResult<Profile>> Get()
         {
             try

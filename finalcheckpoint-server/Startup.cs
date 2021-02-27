@@ -12,8 +12,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 using MySqlConnector;
+using finalcheckpoint_server.Services;
+using finalcheckpoint_server.Repositories;
+using Microsoft.OpenApi.Models;
 
 namespace finalcheckpoint_server
 {
@@ -56,15 +58,15 @@ namespace finalcheckpoint_server
               });
 
             // TODO Transient Repositories
-            // services.AddTransient<PartiesRepository>();
-            // services.AddTransient<ProfilesRepository>();
-            // services.AddTransient<PartyMembersRepository>();
+            services.AddTransient<VaultsRepository>();
+            services.AddTransient<ProfilesRepository>();
+            services.AddTransient<KeepsRepository>();
 
 
             // TODO Transient Services
-            // services.AddTransient<PartiesService>();
-            // services.AddTransient<ProfilesService>();
-            // services.AddTransient<PartyMembersService>();
+            services.AddTransient<VaultsService>();
+            services.AddTransient<ProfilesService>();
+            services.AddTransient<KeepsService>();
 
 
             services.AddControllers();
@@ -74,7 +76,7 @@ namespace finalcheckpoint_server
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Party_Planner", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "finalcheckpoint_server", Version = "v1" });
             });
         }
 
@@ -91,7 +93,7 @@ namespace finalcheckpoint_server
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Party_Planner v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "finalcheckpoint_server v1"));
             }
 
             app.UseHttpsRedirection();
