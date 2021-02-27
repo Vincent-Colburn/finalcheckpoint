@@ -26,41 +26,7 @@ namespace finalcheckpoint_server.Controllers
             _ks = ks;
         }
 
-        // GET vaults by the owner ID
-        // [HttpGet]
-        // [Authorize]
-        // public async Task<ActionResult<Vault>> Get(int id, string email)
-        // {
-        //     try
-        //     {
-        //         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-        //         email = userInfo.Email;
-        //         return Ok(_vs.GetAll());
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         return BadRequest(e.Message);
-        //     }
-        // }
-
-        // [HttpGet("{id}")]
-        // [Authorize]
-        // public async Task<ActionResult<IEnumerable<Vault>>> GetById(int id)
-        // {
-        //     try
-        //     {
-        //         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-        //         return Ok(_vs.GetById(id));
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         return BadRequest(e.Message);
-        //     }
-        // }
-
-        // this works and is your back up
         [HttpGet("{id}")]
-        [Authorize]
         public async Task<ActionResult<Vault>> GetById(int id)
         {
             try
@@ -74,20 +40,6 @@ namespace finalcheckpoint_server.Controllers
             }
         }
 
-
-
-        // [HttpGet("{id}/keeps")]
-        // public ActionResult<Vault> GetKeeps(int id)
-        // {
-        //     try
-        //     {
-        //         return Ok(_vs.GetKeepsByVaultId(id));
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         return BadRequest(e.Message);
-        //     }
-        // }
         // POST api/Vaults
         [HttpPost]
         [Authorize]
