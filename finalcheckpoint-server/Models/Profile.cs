@@ -8,7 +8,7 @@ namespace finalcheckpoint_server.Models
         public string Picture { get; set; }
     }
 
-    public class ProfileKeepModel : Profile
+    public class ProfileKeepViewModel : Profile
     {
         public int ProfileKeepId { get; set; }
     }

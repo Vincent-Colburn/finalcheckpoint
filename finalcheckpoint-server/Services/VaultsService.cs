@@ -10,55 +10,42 @@ namespace finalcheckpoint_server.Services
     public class VaultsService
     {
         private readonly VaultsRepository _vrepo;
-        public VaultsService(VaultsRepository vrepo)
+
+        private readonly ProfilesRepository _prepo;
+        public VaultsService(VaultsRepository vrepo, ProfilesRepository prepo)
         {
             _vrepo = vrepo;
+            _prepo = prepo;
         }
 
 
 
-        // internal IEnumerable<Vault> GetAll()
-        // {
+        internal IEnumerable<Vault> GetAll()
+        {
 
-        //     IEnumerable<Vault> vaults = _vrepo.GetAll();
-        //     return vaults.ToList().FindAll(v => v.IsPrivate);
-        //     // if (exists == null)
-        //     // {
-        //     //     throw new Exception("Invalid Id");
-        //     // }
-        //     // return exists;
+            IEnumerable<Vault> vaults = _vrepo.GetAll();
+            return vaults;
+        }
 
-        // }
 
-        // this doesn't work because it breaks all other functions that need to return a Vault
-        //   internal IEnumerable<Vault> GetById(int id)
-        //         {
-
-        //             IEnumerable<Vault> exists = _vrepo.GetById(id);
-        //             if (exists == null)
-        //             {
-        //                 throw new Exception("Invalid Id");
-        //             }
-        //             return exists.ToList().FindAll(v => v.IsPrivate);
-        //         }
-
-        // // // this works and is your back up
         internal Vault GetById(int id)
         {
 
             var exists = _vrepo.GetById(id);
-            if (exists == null)
+            if (exists.IsPrivate == false)
             {
-                throw new Exception("Invalid Id");
+                return exists;
+            }
+            if (exists.IsPrivate == true)
+            {
+                throw new Forbidden("This vault is private");
             }
             return exists;
         }
 
         internal Vault Create(Vault newVault)
         {
-            int id = _vrepo.Create(newVault);
-            newVault.Id = id;
-            return newVault;
+            return _vrepo.Create(newVault);
         }
 
         internal Vault Edit(Vault editData, string userId)
@@ -69,13 +56,7 @@ namespace finalcheckpoint_server.Services
             editData.Description = editData.Description == null ? original.Description : editData.Description;
 
             return _vrepo.Edit(editData);
-
         }
-
-        // internal object GetKeepsByVaultId(int id)
-        // {
-        //     throw new NotImplementedException();
-        // }
 
         internal string Delete(int id, string userId)
         {
@@ -91,6 +72,36 @@ namespace finalcheckpoint_server.Services
             _vrepo.Remove(id);
             return "sucessfully deleted";
         }
+
+        internal IEnumerable<VaultKeepViewModel> GetKeepsByVaultId(int id)
+        {
+            IEnumerable<VaultKeepViewModel> data = _vrepo.GetKeepsByVaultId(id);
+            Vault original = _vrepo.GetById(id);
+            if (original.IsPrivate == false)
+            {
+                return data;
+            }
+            if (original.IsPrivate == true)
+            {
+                throw new Forbidden("This vault is private");
+            }
+            return data;
+
+
+
+        }
+
+        internal IEnumerable<Vault> GetVaultsByProfileId(string id)
+        {
+            return _vrepo.GetVaultsByProfileId(id).ToList().FindAll(v => v.IsPrivate == false);
+        }
+        internal IEnumerable<Vault> GetVaultsByOwnerId(string id)
+        {
+            return _vrepo.GetVaultsByOwnerId(id);
+
+        }
+
+
 
     }
 }

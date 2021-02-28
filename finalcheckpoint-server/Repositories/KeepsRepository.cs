@@ -18,8 +18,17 @@ namespace finalcheckpoint_server.Repositories
 
         internal IEnumerable<Keep> GetKeeps()
         {
-            string sql = "SELECT * FROM keeps;";
-            return _db.Query<Keep>(sql);
+            string sql = @"
+            SELECT 
+            keep.*,
+            profile.*
+            FROM keeps keep
+            JOIN profiles profile ON keep.creatorId = profile.id;";
+            return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
+             {
+                 keep.Creator = profile;
+                 return keep;
+             }, splitOn: "id");
         }
 
         internal Keep Get(int id)
@@ -31,7 +40,11 @@ namespace finalcheckpoint_server.Repositories
             FROM keeps keep
             JOIN profiles profile ON keep.creatorId = profile.id
             WHERE keep.id = @id";
-            return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) => { keep.Creator = profile; return keep; }, new { id }, splitOn: "id").FirstOrDefault();
+            return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
+            {
+                keep.Creator = profile;
+                return keep;
+            }, new { id }, splitOn: "id").FirstOrDefault();
         }
 
         internal int Create(Keep newKeep)
@@ -73,7 +86,12 @@ namespace finalcheckpoint_server.Repositories
             FROM keeps keep
             JOIN profiles profile ON keep.creatorId = profile.id
             WHERE keep.creatorId = @id;";
-            return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) => { keep.Creator = profile; return keep; }, new { id }, splitOn: "id");
+            return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
+            {
+                keep.Creator = profile;
+                return keep;
+
+            }, new { id }, splitOn: "id");
         }
 
 
@@ -96,22 +114,23 @@ namespace finalcheckpoint_server.Repositories
         }
 
         // TODO NOT WORKING
-        internal IEnumerable<Keep> GetKeepsByVaultId(int vaultId)
-        {
-            string sql = @"
-      SELECT
-      keep.*,
-      vk.id as VaultKeepId,
-      vau.*
-      FROM vaultkeeps vk 
-      JOIN keeps keep ON vk.keepId == keep.id
-      JOIN vaults vau ON keep.
-      ";
+        // internal IEnumerable<Keep> GetKeepsByVaultId(int vaultId)
+        // {
+        //     string sql = @"
+        //   SELECT
+        //   vau.*,
+        //   vk.id as VaultKeepId,
+        //   keep.*
+        //   FROM vaultkeeps vk 
+        //   JOIN vaults vau ON vau.id == vk.vaultId
+        //   JOIN keeps keep ON vk.keepId == keep.id
+        //   ";
 
-            return _db.Query<VaultKeepViewModel, Keep, VaultKeepViewModel>(sql, (keep, vault) =>
-            {
-                return keep;
-            }, new { vaultId }, splitOn: "id");
-        }
+        //     return _db.Query<VaultKeepViewModel, Keep, VaultKeepViewModel>(sql, (vault, keep) =>
+        //     {
+        //         vault.Keeps = keep;
+        //         return vault;
+        //     }, new { vaultId }, splitOn: "id");
+        // }
     }
 }

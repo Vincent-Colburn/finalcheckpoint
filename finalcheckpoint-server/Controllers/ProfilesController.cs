@@ -14,10 +14,13 @@ namespace finalcheckpoint_server.Controllers
         private readonly ProfilesService _service;
         private readonly KeepsService _ks;
 
-        public ProfilesController(ProfilesService service, KeepsService ks)
+        private readonly VaultsService _vs;
+
+        public ProfilesController(ProfilesService service, KeepsService ks, VaultsService vs)
         {
             _service = service;
             _ks = ks;
+            _vs = vs;
         }
 
 
@@ -43,6 +46,21 @@ namespace finalcheckpoint_server.Controllers
             try
             {
                 IEnumerable<Keep> keeps = _ks.GetByProfileId(id);
+                return Ok(keeps);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("{id}/vaults")]
+
+        public ActionResult<IEnumerable<Vault>> GetVaultsByProfileId(string id)
+        {
+            try
+            {
+                IEnumerable<Vault> keeps = _vs.GetVaultsByProfileId(id);
                 return Ok(keeps);
             }
             catch (Exception e)

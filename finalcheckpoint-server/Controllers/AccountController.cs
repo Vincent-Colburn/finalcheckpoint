@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using finalcheckpoint_server.Models;
 using finalcheckpoint_server.Services;
+using System.Collections.Generic;
 
 namespace finalcheckpoint_server.Controllers
 {
@@ -39,5 +40,23 @@ namespace finalcheckpoint_server.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet("{id}/vaults")]
+        [Authorize]
+
+        public async Task<ActionResult<IEnumerable<Vault>>> GetVaultsByOwnerId()
+        {
+            try
+            {
+                Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+                IEnumerable<Vault> vaults = _vs.GetVaultsByOwnerId(userInfo.Id);
+                return Ok(vaults);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
     }
 }

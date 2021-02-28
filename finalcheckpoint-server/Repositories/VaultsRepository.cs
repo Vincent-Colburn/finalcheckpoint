@@ -16,30 +16,11 @@ namespace finalcheckpoint_server.Repositories
             _db = db;
         }
 
-        // internal IEnumerable<Vault> GetAll()
-        // {
-        //     string sql = @"
-        //     SELECT
-        //     vault.*,
-        //     profile.*
-        //     FROM vaults vault
-        //     JOIN profiles profile ON vault.owenerId = profile.id;
-        //     ";
-        //     return _db.Query<Vault, Profile, Vault>(sql, (vault, profile) => { vault.Creator = profile; return vault; }, splitOn: "id");
-        // }
-
-        // testing one 
-        //  internal Vault GetById(string email)
-        //         {
-        //             string sql = @"
-        //             SELECT
-        //             vault.*,
-        //             profile.*
-        //             FROM vaults vault
-        //             JOIN profiles profile ON vault.creatorId = profile.id
-        //             WHERE vault.id = @id";
-        //             return _db.Query<Vault, Profile, Vault>(sql, (vault, profile) => { vault.Creator = profile; return vault; }, new { id }, splitOn: "id").FirstOrDefault();
-        //         }
+        internal IEnumerable<Vault> GetAll()
+        {
+            string sql = "SELECT * FROM vaults;";
+            return _db.Query<Vault>(sql);
+        }
 
         internal Vault GetById(int id)
         {
@@ -49,20 +30,26 @@ namespace finalcheckpoint_server.Repositories
             profile.*
             FROM vaults vault
             JOIN profiles profile ON vault.creatorId = profile.id
-            WHERE vault.id = @id";
-            return _db.Query<Vault, Profile, Vault>(sql, (vault, profile) => { vault.Creator = profile; return vault; }, new { id }, splitOn: "id").FirstOrDefault();
+            WHERE vault.Id = @id";
+            return _db.Query<Vault, Profile, Vault>(sql, (vault, profile) =>
+            {
+                vault.Creator = profile;
+                return vault;
+            }, new { id }, splitOn: "id").FirstOrDefault();
         }
 
-        internal int Create(Vault newVault)
+        internal Vault Create(Vault newVault)
         {
             string sql = @"
             INSERT INTO vaults
             (creatorId, name, description, isPrivate)
             VALUES
-            (@creatorId, @Name, @Description, @IsPrivate);
+            (@CreatorId, @Name, @Description, @IsPrivate);
             SELECT LAST_INSERT_ID();
             ";
-            return _db.ExecuteScalar<int>(sql, newVault);
+            int id = _db.ExecuteScalar<int>(sql, newVault);
+            newVault.Id = id;
+            return newVault;
         }
 
         internal Vault Edit(Vault editData)
@@ -83,6 +70,75 @@ namespace finalcheckpoint_server.Repositories
             _db.Execute(sql, new { id });
         }
 
+        internal IEnumerable<VaultKeepViewModel> GetKeepsByVaultId(int id)
+        {
+            string sql = @"
+          SELECT
+          vau.*,
+          vk.id as VaultKeepId,
+          keep.*
+          FROM vaultkeeps vk 
+          JOIN vaults vau ON vau.id = vk.vaultId
+          JOIN keeps keep ON vk.keepId = keep.id
+          WHERE vaultId = @id
+          ";
+
+            return _db.Query<VaultKeepViewModel, Keep, VaultKeepViewModel>(sql, (vault, keep) =>
+            {
+                vault.Keeps = keep;
+                vault.Keeps.Creator = keep.Creator;
+                return vault;
+            }, new { id }, splitOn: "id");
+
+        }
+
+        internal IEnumerable<Vault> GetVaultsByProfileId(string id)
+        {
+            string sql = @"
+            SELECT
+            vault.*,
+            profile.*
+            FROM vaults vault
+            JOIN profiles profile ON vault.creatorId = profile.id
+            WHERE vault.creatorId = @id;";
+            return _db.Query<Vault, Profile, Vault>(sql, (vault, profile) => { vault.Creator = profile; return vault; }, new { id }, splitOn: "id");
+        }
+
+        internal IEnumerable<Vault> GetVaultsByOwnerId(string id)
+        {
+            string sql = @"
+            SELECT
+            vault.*,
+            profile.*
+            FROM vaults vault
+            JOIN profiles profile ON vault.creatorId = profile.id
+            WHERE vault.creatorId = @id;";
+            return _db.Query<Vault, Profile, Vault>(sql, (vault, profile) => { vault.Creator = profile; return vault; }, new { id }, splitOn: "id");
+        }
+
+        // this works
+
+
+        // internal IEnumerable<VaultKeepViewModel> GetKeepsByVaultId(int vaultId)
+        // {
+        //     string sql = @"
+        //   SELECT
+        //   vau.*,
+        //   vk.id as VaultKeepId,
+        //   keep.*
+        //   FROM vaultkeeps vk 
+        //   JOIN vaults vau ON vau.id = vk.vaultId
+        //   JOIN keeps keep ON vk.keepId = keep.id
+        //   WHERE vaultId = @vaultId
+        //   ";
+
+        //     return _db.Query<VaultKeepViewModel, Keep, VaultKeepViewModel>(sql, (vault, keep) =>
+        //     {
+        //         vault.Keeps = keep;
+        //         return vault;
+        //     }, new { vaultId }, splitOn: "id");
+
+        // }
 
     }
 }

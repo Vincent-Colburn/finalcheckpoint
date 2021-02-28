@@ -26,6 +26,19 @@ namespace finalcheckpoint_server.Controllers
             _ks = ks;
         }
 
+        [HttpGet]
+        public ActionResult<IEnumerable<Vault>> GetAll()
+        {
+            try
+            {
+                return Ok(_vs.GetAll());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            };
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Vault>> GetById(int id)
         {
@@ -98,13 +111,13 @@ namespace finalcheckpoint_server.Controllers
         }
 
         [HttpGet("{id}/keeps")]
-        [Authorize]
+        // [Authorize]
         public ActionResult<IEnumerable<VaultKeepViewModel>> GetKeeps(int id)
         {
             try
             {
-                IEnumerable<VaultKeepViewModel> keeps = _ks.GetKeepsByVaultId(id);
-                return keeps;
+                IEnumerable<VaultKeepViewModel> keeps = _vs.GetKeepsByVaultId(id);
+                return Ok(keeps);
             }
             catch (Exception e)
             {

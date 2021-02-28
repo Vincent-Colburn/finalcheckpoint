@@ -15,11 +15,11 @@ namespace finalcheckpoint_server.Repositories
             _db = db;
         }
 
-        // internal IEnumerable<VaultKeep> Get()
-        // {
-        //     string sql = "SELECT * FROM vaultkeeps;";
-        //     return _db.Query<VaultKeep>(sql);
-        // }
+        internal IEnumerable<VaultKeep> GetAll()
+        {
+            string sql = "SELECT * FROM vaultkeeps;";
+            return _db.Query<VaultKeep>(sql);
+        }
         internal int Create(VaultKeep newVau)
         {
             string sql = @"

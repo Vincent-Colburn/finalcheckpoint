@@ -44,7 +44,10 @@ namespace finalcheckpoint_server.Services
         internal Keep Edit(Keep editData, string userId)
         {
             Keep original = GetById(editData.Id);
-            if (original.CreatorId != userId) { throw new Forbidden("Access Denied: You are not the original creator"); }
+            if (original.CreatorId != userId)
+            {
+                throw new Forbidden("Access Denied: You are not the original creator");
+            }
             editData.Name = editData.Name == null ? original.Name : editData.Name;
             editData.Description = editData.Description == null ? original.Description : editData.Description;
             editData.Img = editData.Img == null ? original.Img : editData.Img;
@@ -61,12 +64,12 @@ namespace finalcheckpoint_server.Services
             return "successfully deleted";
         }
 
-        internal IEnumerable<VaultKeepViewModel> GetKeepsByVaultId(int id)
-        {
-            IEnumerable<VaultKeepViewModel> data = _krepo.GetKeepsByVaultId(id);
-            return data;
+        // internal IEnumerable<VaultKeepViewModel> GetKeepsByVaultId(int id)
+        // {
+        //     IEnumerable<VaultKeepViewModel> data = _krepo.GetKeepsByVaultId(id);
+        //     return data;
 
-        }
+        // }
 
 
     }

@@ -13,6 +13,12 @@ namespace finalcheckpoint_server.Models
         public bool IsPrivate { get; set; }
 
         // This is essentially the virtual from node.js
+        public Keep Keeps { get; set; }
         public Profile Creator { get; set; }
+    }
+
+    public class VaultKeepViewModel : Vault
+    {
+        public int VaultKeepId { get; set; }
     }
 }
