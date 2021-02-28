@@ -8,8 +8,28 @@
 </template>
 
 <script>
+import { computed, onMounted, reactive } from 'vue'
+// import { useRoute, useRouter } from 'vue-router'
+import { AppState } from '../AppState'
+import { keepService } from '../services/KeepService'
+import { logger } from '../utils/Logger'
 export default {
-  name: 'Home'
+  name: 'Home',
+  setup() {
+    // const router = useRouter()
+    const state = reactive({
+      keeps: computed(() => AppState.keeps)
+    })
+
+    onMounted(async() => {
+      try {
+        await keepService.getKeeps()
+      } catch (error) {
+        logger.error(error)
+      }
+    })
+    return { state }
+  }
 }
 </script>
 
