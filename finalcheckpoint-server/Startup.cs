@@ -96,6 +96,7 @@ namespace finalcheckpoint_server
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "finalcheckpoint_server v1"));
+                app.UseCors("CorsDevPolicy");
             }
 
             app.UseHttpsRedirection();
