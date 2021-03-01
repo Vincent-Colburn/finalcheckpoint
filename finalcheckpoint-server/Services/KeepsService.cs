@@ -19,9 +19,13 @@ namespace finalcheckpoint_server.Services
         {
             return _krepo.GetKeeps();
         }
-        internal Keep GetById(int id)
+        internal Keep GetById(int id, string userId)
         {
-            Keep exists = _krepo.Get(id);
+            return _krepo.GetById(id);
+        }
+        internal Keep GetByIdNoProf(int id)
+        {
+            Keep exists = _krepo.GetById(id);
             if (exists == null)
             {
                 throw new Exception("Invalid Id");
@@ -43,7 +47,7 @@ namespace finalcheckpoint_server.Services
 
         internal Keep Edit(Keep editData, string userId)
         {
-            Keep original = GetById(editData.Id);
+            Keep original = GetByIdNoProf(editData.Id);
             if (original.CreatorId != userId)
             {
                 throw new Forbidden("Access Denied: You are not the original creator");
@@ -55,9 +59,93 @@ namespace finalcheckpoint_server.Services
             return _krepo.Edit(editData);
 
         }
+        // internal Keep IncreaseViews(Keep keep)
+        // {
+        //     int originalKeeps = keep.Keeps;
+        //     // if (keep.CreatorId == userId)
+        //     // {
+        //     //     throw new Forbidden("Thought you'd catch me slippin");
+        //     // }
+        //     // if (keep.CreatorId != userId)
+        //     // {
+        //     // Keep found = GetByIdNoProf(keep.Id);
+        //     for (int i = originalKeeps; i <= originalKeeps; i++)
+        //     {
+        //         if (i > originalKeeps)
+        //         {
+        //             break;
+        //         }
+        //         keep.Keeps += 1;
+        //         if (i == originalKeeps)
+        //         {
+        //             continue;
+        //         }
+        //     }
+        //     // }
+        //     return _krepo.EditViews(keep);
+        // }
+        internal Keep IncreaseViews(Keep keep)
+        {
+            int originalViews = keep.Views;
+            // if (keep.CreatorId == userId)
+            // {
+            //     throw new Forbidden("Thought you'd catch me slippin");
+            // }
+            // if (keep.CreatorId != userId)
+            // {
+            for (int i = originalViews; i <= originalViews; i++)
+            {
+                if (i > originalViews)
+                {
+                    break;
+                }
+                keep.Views += 1;
+                if (i == originalViews)
+                {
+                    continue;
+                }
+            }
+            // }
+            return _krepo.EditViews(keep);
+        }
+
+        internal Keep IncreaseKeeps(int keepId, string vkCreatorId)
+        {
+            Keep original = _krepo.GetById(keepId);
+            Keep found = _krepo.GetById(keepId);
+            if (found.CreatorId != vkCreatorId)
+            {
+
+                // do
+                // {
+
+                for (int i = found.Keeps; i <= original.Keeps; i++)
+                {
+                    if (i > found.Keeps)
+                    {
+                        break;
+                    }
+                    found.Keeps += 1;
+                    if (i == found.Keeps)
+                    {
+                        continue;
+                    }
+                }
+                // if (keep.CreatorId == userId)
+                // {
+                //     throw new Forbidden("Thought you'd catch me slippin");
+                // }
+                // if (keep.CreatorId != userId)
+                // {
+                // //    this is where it was before
+                // }
+                // } while (original.Keeps > found.Keeps);
+            }
+            return _krepo.EditKeeps(found);
+        }
         internal string Delete(int id, string userId)
         {
-            Keep original = _krepo.Get(id);
+            Keep original = _krepo.GetById(id);
             if (original == null) { throw new Exception("Bad Id"); }
             if (original.CreatorId != userId) { throw new Forbidden("Access Denied: You are not the original creator"); }
             _krepo.Remove(id);

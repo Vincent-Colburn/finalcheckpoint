@@ -78,9 +78,9 @@ namespace finalcheckpoint_server.Repositories
           vk.id as VaultKeepId,
           keep.*
           FROM vaultkeeps vk 
-          JOIN vaults vau ON vau.id = vk.vaultId
+          JOIN vaults vau ON vk.vaultId = vau.id
           JOIN keeps keep ON vk.keepId = keep.id
-          WHERE vaultId = @id
+          WHERE vk.id = @id
           ";
 
             return _db.Query<VaultKeepViewModel, Keep, VaultKeepViewModel>(sql, (vault, keep) =>

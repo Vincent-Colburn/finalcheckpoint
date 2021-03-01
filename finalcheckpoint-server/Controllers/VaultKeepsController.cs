@@ -19,10 +19,26 @@ namespace finalcheckpoint_server.Controllers
 
         private readonly VaultsService _vs;
 
-        public VaultKeepsController(VaultKeepsService service, VaultsService vs)
+        private readonly KeepsService _ks;
+
+        public VaultKeepsController(VaultKeepsService service, VaultsService vs, KeepsService ks)
         {
             _service = service;
             _vs = vs;
+            _ks = ks;
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<VaultKeep> GetById(int id)
+        {
+            try
+            {
+                return Ok(_vs.GetById(id));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet]
@@ -38,7 +54,11 @@ namespace finalcheckpoint_server.Controllers
             };
         }
 
+
+
+
         [HttpPost]
+        [Authorize]
 
         public async Task<ActionResult<VaultKeep>> Post([FromBody] VaultKeep newVau)
         {
@@ -47,6 +67,7 @@ namespace finalcheckpoint_server.Controllers
                 Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
                 newVau.CreatorId = userInfo.Id;
                 VaultKeep created = _service.Create(newVau);
+                _ks.IncreaseKeeps(newVau.KeepId, newVau.CreatorId);
                 return Ok(created);
             }
             catch (Exception e)

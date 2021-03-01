@@ -20,20 +20,26 @@ namespace finalcheckpoint_server.Repositories
             string sql = "SELECT * FROM vaultkeeps;";
             return _db.Query<VaultKeep>(sql);
         }
+
+        internal VaultKeep GetById(int id)
+        {
+            string sql = "SELECT * FROM vaultkeeps WHERE id = @id;";
+            return _db.QueryFirstOrDefault<VaultKeep>(sql, new { id });
+        }
         internal int Create(VaultKeep newVau)
         {
             string sql = @"
             INSERT INTO vaultkeeps
             (creatorId, vaultId, keepId)
             VALUES
-            (@creatorId, @VaultId, @KeepId);
+            (@CreatorId, @VaultId, @KeepId);
             SELECT LAST_INSERT_ID();";
             return _db.ExecuteScalar<int>(sql, newVau);
         }
 
         internal void Delete(int id)
         {
-            string sql = "DELETE FROM vaultkeeps WHERE id = @id;";
+            string sql = "DELETE FROM vaultkeeps WHERE id = @id LIMIT 1";
             _db.Execute(sql, new { id });
         }
     }

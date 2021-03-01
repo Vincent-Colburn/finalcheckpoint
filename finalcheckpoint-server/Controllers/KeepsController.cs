@@ -39,17 +39,62 @@ namespace finalcheckpoint_server.Controllers
 
         // GET api/keeps/id
         [HttpGet("{id}")]
-        public ActionResult<Keep> Get(int id)
+        public async Task<ActionResult<Keep>> Get(int id)
         {
             try
             {
-                return Ok(_ks.GetById(id));
+                Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+                // Profile profile = userInfo;
+                Keep found = _ks.GetByIdNoProf(id);
+                // Keep view = _ks.GetByIdNoProf(id);
+                if (userInfo == null)
+                {
+                    _ks.IncreaseViews(found);
+                    return found;
+                }
+                if (found.CreatorId != userInfo.Id)
+                {
+                    _ks.IncreaseViews(found);
+                }
+                return Ok(found);
+
+                // if (profile == null)
+                // {
+                //     _ks.GetByIdNoProf(id);
+                // }
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
+
+
         }
+
+        // [HttpGet("{id}")]
+        // public async Task<ActionResult<Keep>> IncreaseViews(int id)
+        // {
+        //     try
+        //     {
+        //         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        //         Keep found = _ks.GetById(id);
+        //         if (userInfo == null)
+        //         {
+        //             return Ok(_ks.IncreaseViewsNoProf(found));
+        //         }
+        //         if (userInfo != null && userInfo.Id != found.CreatorId)
+        //         {
+        //             return Ok(_ks.IncreaseViews(found, userInfo.Id));
+        //         }
+        //         return found;
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         return BadRequest(e.Message);
+        //     }
+
+
+        // }
 
         // POST api/keeps
         [HttpPost]

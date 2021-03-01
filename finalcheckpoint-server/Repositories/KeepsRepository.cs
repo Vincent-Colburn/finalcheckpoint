@@ -31,7 +31,7 @@ namespace finalcheckpoint_server.Repositories
              }, splitOn: "id");
         }
 
-        internal Keep Get(int id)
+        internal Keep GetById(int id)
         {
             string sql = @"
             SELECT
@@ -57,6 +57,7 @@ namespace finalcheckpoint_server.Repositories
       SELECT LAST_INSERT_ID();";
             return _db.ExecuteScalar<int>(sql, newKeep);
         }
+
 
         // this is for getting vaults related to a profile
         // internal IEnumerable<VaultKeepViewModel> GetKeepsByVaultById(int id)
@@ -106,6 +107,28 @@ namespace finalcheckpoint_server.Repositories
             WHERE id = @Id;";
             _db.Execute(sql, editData);
             return editData;
+        }
+
+        internal Keep EditKeeps(Keep keep)
+        {
+            string sql = @"
+            UPDATE keeps
+            SET
+            keeps = @Keeps
+            WHERE id = @id;";
+            _db.Execute(sql, keep);
+            return keep;
+        }
+
+        internal Keep EditViews(Keep keep)
+        {
+            string sql = @"
+            UPDATE keeps
+            SET
+            views = @Views
+            WHERE id = @id;";
+            _db.Execute(sql, keep);
+            return keep;
         }
         internal void Remove(int id)
         {
