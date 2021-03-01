@@ -113,34 +113,54 @@ namespace finalcheckpoint_server.Services
         {
             Keep original = _krepo.GetById(keepId);
             Keep found = _krepo.GetById(keepId);
-            if (found.CreatorId != vkCreatorId)
+            // if (found.CreatorId != vkCreatorId)
+            // {
+
+            // do
+            // {
+
+            for (int i = found.Keeps; i <= original.Keeps; i++)
             {
-
-                // do
-                // {
-
-                for (int i = found.Keeps; i <= original.Keeps; i++)
+                if (i > found.Keeps)
                 {
-                    if (i > found.Keeps)
-                    {
-                        break;
-                    }
-                    found.Keeps += 1;
-                    if (i == found.Keeps)
-                    {
-                        continue;
-                    }
+                    break;
                 }
-                // if (keep.CreatorId == userId)
-                // {
-                //     throw new Forbidden("Thought you'd catch me slippin");
-                // }
-                // if (keep.CreatorId != userId)
-                // {
-                // //    this is where it was before
-                // }
-                // } while (original.Keeps > found.Keeps);
+                found.Keeps += 1;
+                if (i == found.Keeps)
+                {
+                    continue;
+                }
             }
+            // if (keep.CreatorId == userId)
+            // {
+            //     throw new Forbidden("Thought you'd catch me slippin");
+            // }
+            // if (keep.CreatorId != userId)
+            // {
+            // //    this is where it was before
+            // }
+            // } while (original.Keeps > found.Keeps);
+            // }
+            return _krepo.EditKeeps(found);
+        }
+
+        internal Keep DecreaseKeeps(int keepId)
+        {
+            Keep original = _krepo.GetById(keepId);
+            Keep found = _krepo.GetById(keepId);
+            for (int i = found.Keeps; i >= original.Keeps; i++)
+            {
+                if (i > found.Keeps)
+                {
+                    break;
+                }
+                found.Keeps -= 1;
+                if (i == found.Keeps)
+                {
+                    continue;
+                }
+            }
+
             return _krepo.EditKeeps(found);
         }
         internal string Delete(int id, string userId)

@@ -83,13 +83,22 @@ namespace finalcheckpoint_server.Controllers
             Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
             try
             {
-                return Ok(_service.Delete(id, userInfo.Id));
+                string worked = _service.Delete(id, userInfo.Id);
+                if (worked != null)
+                {
+                    _ks.DecreaseKeeps(id);
+                }
+
+                return worked;
             }
             catch (Forbidden e)
             {
                 return StatusCode(StatusCodes.Status403Forbidden, e.Message);
             }
         }
+
+        // public EventHandler VaultKeepDel
+        // public abstract class EventListener VaultKeepDeleted; 
 
 
     }
