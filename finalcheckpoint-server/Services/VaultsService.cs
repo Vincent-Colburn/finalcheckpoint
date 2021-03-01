@@ -75,16 +75,16 @@ namespace finalcheckpoint_server.Services
 
         internal IEnumerable<VaultKeepViewModel> GetKeepsByVaultId(int id)
         {
+            // Vault original = _vrepo.GetById(id);
             IEnumerable<VaultKeepViewModel> data = _vrepo.GetKeepsByVaultId(id);
-            Vault original = _vrepo.GetById(id);
-            if (original.IsPrivate == false)
-            {
-                return data;
-            }
-            if (original.IsPrivate == true)
-            {
-                throw new Forbidden("This vault is private");
-            }
+            // if (original.IsPrivate == false)
+            // {
+            //     return data;
+            // }
+            // if (original.IsPrivate == true)
+            // {
+            //     throw new Forbidden("This vault is private");
+            // }
             return data;
 
 
