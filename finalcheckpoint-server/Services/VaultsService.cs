@@ -73,23 +73,23 @@ namespace finalcheckpoint_server.Services
             return "sucessfully deleted";
         }
 
-        internal IEnumerable<VaultKeepViewModel> GetKeepsByVaultId(int id)
-        {
-            // Vault original = _vrepo.GetById(id);
-            IEnumerable<VaultKeepViewModel> data = _vrepo.GetKeepsByVaultId(id);
-            // if (original.IsPrivate == false)
-            // {
-            //     return data;
-            // }
-            // if (original.IsPrivate == true)
-            // {
-            //     throw new Forbidden("This vault is private");
-            // }
-            return data;
+        // internal IEnumerable<VaultKeepViewModel> GetKeepsByVaultId(int id)
+        // {
+        //     // Vault original = _vrepo.GetById(id);
+        //     IEnumerable<VaultKeepViewModel> data = _vrepo.GetKeepsByVaultId(id).ToList();
+        //     // if (original.IsPrivate == false)
+        //     // {
+        //     //     return data;
+        //     // }
+        //     // if (original.IsPrivate == true)
+        //     // {
+        //     //     throw new Forbidden("This vault is private");
+        //     // }
+        //     return data;
 
 
 
-        }
+        // }
 
         internal IEnumerable<Vault> GetVaultsByProfileId(string id)
         {

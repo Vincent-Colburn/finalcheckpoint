@@ -21,7 +21,19 @@ namespace finalcheckpoint_server.Repositories
             return _db.Query<VaultKeep>(sql);
         }
 
-        internal VaultKeep GetById(int id)
+        internal IEnumerable<VaultKeep> GetById(int id)
+        {
+            string sql = @"
+            SELECT
+            vaultkeeps.*,
+            profile.*
+            FROM vaultkeeps vk
+            JOIN profiles profile ON vk.creatorId = profile.id
+            WHERE vk.id = @id;
+            ";
+            return _db.Query<VaultKeep, Profile, VaultKeep>(sql, (vaultKeep, profile) => { vaultKeep.Creator = profile; return vaultKeep; }, new { id }, splitOn: "id");
+        }
+        internal VaultKeep GetByIdNoMultiples(int id)
         {
             string sql = "SELECT * FROM vaultkeeps WHERE id = @id;";
             return _db.QueryFirstOrDefault<VaultKeep>(sql, new { id });

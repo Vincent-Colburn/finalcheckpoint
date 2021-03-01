@@ -27,9 +27,19 @@ namespace finalcheckpoint_server.Services
             return vaultkeeps;
         }
 
-        internal VaultKeep GetById(int id)
+        internal IEnumerable<VaultKeep> GetById(int id)
         {
-            VaultKeep exists = _repo.GetById(id);
+            IEnumerable<VaultKeep> exists = _repo.GetById(id);
+            if (exists == null)
+            {
+                throw new Exception("Invalid Id");
+            }
+            return exists;
+        }
+
+        internal VaultKeep GetByIdNoMultiples(int id)
+        {
+            VaultKeep exists = _repo.GetByIdNoMultiples(id);
             if (exists == null)
             {
                 throw new Exception("Invalid Id");
@@ -70,7 +80,7 @@ namespace finalcheckpoint_server.Services
 
         internal string Delete(int id, string userId)
         {
-            VaultKeep original = _repo.GetById(id);
+            VaultKeep original = _repo.GetByIdNoMultiples(id);
             if (original == null) { throw new Exception("Bad Id"); }
             if (original.CreatorId != userId) { throw new Forbidden("Access Denied: You are not the original creator"); }
             _repo.Delete(id);

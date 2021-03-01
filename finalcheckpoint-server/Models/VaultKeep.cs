@@ -10,5 +10,8 @@ namespace finalcheckpoint_server.Models
 
         public int KeepId { get; set; }
 
+        public Profile Creator { get; set; }
+
+
     }
 }

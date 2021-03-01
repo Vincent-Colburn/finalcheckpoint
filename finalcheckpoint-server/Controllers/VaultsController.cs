@@ -112,11 +112,11 @@ namespace finalcheckpoint_server.Controllers
 
         [HttpGet("{id}/keeps")]
         // [Authorize]
-        public ActionResult<IEnumerable<VaultKeepViewModel>> GetKeeps(int id)
+        public ActionResult<IEnumerable<Keep>> GetKeeps(int id)
         {
             try
             {
-                IEnumerable<VaultKeepViewModel> keeps = _vs.GetKeepsByVaultId(id);
+                IEnumerable<Keep> keeps = _ks.GetKeepsByVaultId(id);
                 return Ok(keeps);
             }
             catch (Exception e)

@@ -136,6 +136,48 @@ namespace finalcheckpoint_server.Repositories
             _db.Execute(sql, new { id });
         }
 
+        internal IEnumerable<VaultKeepViewModel> GetKeepsByVaultId(int vaultId)
+        {
+            string sql = @"
+          SELECT
+          vau.*,
+          vk.id as VaultKeepId,
+          keep.*,
+          profile.*
+          FROM vaultkeeps vk 
+          JOIN keeps keep ON keep.id = vk.keepId
+          JOIN vaults vau ON vau.id = vk.vaultId
+          JOIN profiles profile ON keep.creatorId = profile.id 
+          WHERE vk.vaultId = @vaultId
+          ";
+            // string sql = @
+            //   SELECT
+            //   k.*,
+            //   vk.id as VaultKeepId,
+            //   profile.*
+            //   FROM vaultkeeps vk
+            //   JOIN keeps k ON k.id= vk.keepId
+            //   JOIN profiles profile ON k.creatorId = profile.id 
+            //   JOIN vaults vault ON vk.vaultId = vaultId
+            //   WHERE vk.vaultId = @vaultId
+            //   ";
+            // working
+            return _db.Query<VaultKeepViewModel, Profile, VaultKeepViewModel>(sql, (keep, profile) =>
+            {
+
+                keep.Creator = profile;
+                return keep;
+            }, new { vaultId });
+
+            //     return _db.Query<VaultKeepViewModel, Keep, Profile, VaultKeepViewModel>(sql, (vault, keep, profile) =>
+            //  {
+            //      vault.Keeps = keep;
+            //      vault.Keeps.Creator = profile;
+            //      return vault;
+            //  }, new { id }, splitOn: "id, creatorId");
+
+        }
+
         // TODO NOT WORKING
         // internal IEnumerable<Keep> GetKeepsByVaultId(int vaultId)
         // {

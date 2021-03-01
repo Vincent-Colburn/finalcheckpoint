@@ -29,7 +29,7 @@ namespace finalcheckpoint_server.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<VaultKeep> GetById(int id)
+        public ActionResult<IEnumerable<VaultKeep>> GetById(int id)
         {
             try
             {

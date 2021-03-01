@@ -10,9 +10,12 @@ namespace finalcheckpoint_server.Services
     public class KeepsService
     {
         private readonly KeepsRepository _krepo;
-        public KeepsService(KeepsRepository krepo)
+
+        private readonly VaultsRepository _vrepo;
+        public KeepsService(KeepsRepository krepo, VaultsRepository vrepo)
         {
             _krepo = krepo;
+            _vrepo = vrepo;
         }
 
         internal IEnumerable<Keep> GetKeeps()
@@ -57,6 +60,30 @@ namespace finalcheckpoint_server.Services
             editData.Img = editData.Img == null ? original.Img : editData.Img;
 
             return _krepo.Edit(editData);
+
+        }
+
+
+        internal IEnumerable<VaultKeepViewModel> GetKeepsByVaultId(int vaultId)
+        {
+            // Vault original = _vrepo.GetById(id);
+            Vault exists = _vrepo.GetById(vaultId);
+            if (exists == null)
+            {
+                throw new Exception("Invalid Id");
+            }
+            return _krepo.GetKeepsByVaultId(vaultId);
+
+            // if (original.IsPrivate == false)
+            // {
+            //     return data;
+            // }
+            // if (original.IsPrivate == true)
+            // {
+            //     throw new Forbidden("This vault is private");
+            // }
+
+
 
         }
         // internal Keep IncreaseViews(Keep keep)
