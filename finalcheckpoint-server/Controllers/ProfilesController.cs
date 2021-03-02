@@ -60,8 +60,8 @@ namespace finalcheckpoint_server.Controllers
         {
             try
             {
-                IEnumerable<Vault> keeps = _vs.GetVaultsByProfileId(id);
-                return Ok(keeps);
+                IEnumerable<Vault> vaults = _vs.GetVaultsByProfileId(id);
+                return Ok(vaults);
             }
             catch (Exception e)
             {

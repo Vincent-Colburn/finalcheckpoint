@@ -9,11 +9,6 @@
               {{ keepsProps.name }}
             </p>
           </div>
-          <div class="col-4 float-right">
-            <router-link :to="{ name: 'ProfileDetailsPage', params: { id: keepsProps.creatorId}}">
-              <img class="card-img-profile profile rounded float-right img-fluid rounded-circle" :src="keepsProps.creator.picture" alt="">
-            </router-link>
-          </div>
         </div>
       </div>
     </div>
@@ -25,7 +20,7 @@ import { computed, reactive } from 'vue'
 import { AppState } from '../AppState'
 import { keepService } from '../services/KeepService'
 export default {
-  name: 'KeepComponent',
+  name: 'ProfileKeepComponent',
   props: ['keepsProps'],
   setup(props) {
     const state = reactive({

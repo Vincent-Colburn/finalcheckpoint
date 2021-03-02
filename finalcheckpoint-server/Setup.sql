@@ -1,8 +1,26 @@
 USE finalcheckpoint;
 
 -- DROP TABLE vaultkeeps;
-
+-- TRUNCATE TABLE vaults;
 -- ALREADY CREATED
+
+-- CREATE TABLE vaultkeeps
+-- (
+--     id INT AUTO_INCREMENT NOT NULL,
+--     creatorId VARCHAR(255) NOT NULL,
+--     vaultId INT NOT NULL,
+--     keepId INT NOT NULL,
+
+--     PRIMARY KEY(id),
+    
+--     FOREIGN KEY (vaultId)
+--         REFERENCES vaults(id)
+--         ON DELETE CASCADE,
+
+--     FOREIGN KEY (keepId)
+--         REFERENCES keeps(id)
+--         ON DELETE CASCADE
+-- );
 
 
 

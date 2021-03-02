@@ -10,11 +10,13 @@ class ProfileService {
   async getKeepsByProfileId(id) {
     const res = await api.get('api/profiles/' + id + '/keeps')
     AppState.profileKeeps = res.data
+    console.log('keeps for profile', res.data)
   }
 
   async getVaultsByProfileId(id) {
     const res = await api.get('api/profiles/' + id + '/vaults')
     AppState.profileVaults = res.data
+    // console.log('vaults for profile', res.data)
   }
 }
 
