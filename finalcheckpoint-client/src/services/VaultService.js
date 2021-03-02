@@ -1,5 +1,6 @@
 import { AppState } from '../AppState'
 import { api } from './AxiosService'
+import { profileService } from './ProfileService'
 
 class VaultService {
   async getVaultById(id) {
@@ -12,8 +13,9 @@ class VaultService {
     this.getVaultById(res.id)
   }
 
-  async deleteVault(id) {
-    await api.delete('api/vaults/' + id)
+  async deleteVault(vault) {
+    await api.delete('api/vaults/' + vault.id)
+    profileService.getVaultsByProfileId(vault.creatorId)
   }
 
   async getKeepsByVaultId(id) {

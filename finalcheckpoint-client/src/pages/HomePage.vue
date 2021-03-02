@@ -1,10 +1,10 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center mx-5">
-    <div class="row">
-      <div class="card-columns">
-        <KeepComponent v-for="keep in state.keeps" :key="keep.id" :keeps-props="keep" />
-      </div>
+  <div class="container-fluid">
+    <!-- <div class="row test"> -->
+    <div class="card-columns">
+      <KeepComponent v-for="keep in state.keeps" :key="keep.id" :keeps-props="keep" />
     </div>
+    <!-- </div> -->
   </div>
 </template>
 
@@ -38,6 +38,41 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "bootstrap";
+
+// @media (min-width: 992px) {
+//  .card-columns {column-count: 3;}
+// }
+// @media (min-width: 1200px) {
+//    .card-columns {column-count: 3;
+//    }
+// }
+
+.card-columns {
+  @include media-breakpoint-only(xl) {
+    padding: 20px;
+    column-count: 3;
+  }
+  // @include media-breakpoint-down(xl) {
+  //   display: block;
+  // }
+  // @include media-breakpoint-only(lg) {
+  //   column-count: 3;
+  // }
+  // @include media-breakpoint-only(md) {
+  //   column-count: 3;
+  // }
+  // @include media-breakpoint-only(sm) {
+  //   column-count: 2;
+  // }
+}
+
+// .card-columns {
+//   column-count: 4;
+// }
+// .card-columns .card{
+//   display: block;
+// }
 // .home{
 //   text-align: center;
 //   user-select: none;

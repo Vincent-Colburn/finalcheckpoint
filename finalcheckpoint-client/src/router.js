@@ -1,5 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { authGuard } from '@bcwdev/auth0provider-client'
+// import { vaultService } from './services/VaultService'
+// import { accountService } from './services/AccountService'
 
 function loadPage(page) {
   return () => import(`./pages/${page}.vue`)
@@ -25,6 +27,20 @@ const routes = [
     path: '/vault/:id',
     name: 'VaultDetailsPage',
     component: loadPage('VaultDetailsPage')
+    // beforeEnter: (to, from, next) => {
+    // vault = vaultService.getVaultById(id),
+    // account = accountService.getAccount(),
+    // if(vault.IsPrivate === true) {
+    //   if (vault.creatorId === account.id) {
+    //     next()
+    //   } else {
+    //     const err = new Error('You cannot enter private vaults')
+    //     next(err)
+    //   }
+    // } else {
+    //   next()
+    // }
+    // }
   },
   {
     path: '/account',

@@ -1,19 +1,17 @@
 <template>
-  <div class="card-column">
-    <div class="card">
-      <img class="card-img-top background-img img-fluid rounded" :src="keepsProps.img" alt="Card image" style="width:100%">
-      <div class="card-img-overlay">
-        <div class="row position-absolute fixed-bottom">
-          <div class="col-8">
-            <p class="keepName float-left text-wrap text-weight-bold ">
-              {{ keepsProps.name }}
-            </p>
-          </div>
-          <div class="col-4 float-right">
-            <router-link :to="{ name: 'ProfileDetailsPage', params: { id: keepsProps.creatorId}}">
-              <img class="card-img-profile profile rounded float-right img-fluid rounded-circle" :src="keepsProps.creator.picture" alt="">
-            </router-link>
-          </div>
+  <div class="card">
+    <img class="card-img-top background-img rounded" :src="keepsProps.img" alt="" style="width:100%">
+    <div class="card-img-overlay">
+      <div class="row position-absolute fixed-bottom">
+        <div class="col-8">
+          <p class="keepName float-left text-wrap text-weight-bold ">
+            {{ keepsProps.name }}
+          </p>
+        </div>
+        <div class="col-4 float-right">
+          <router-link :to="{ name: 'ProfileDetailsPage', params: { id: keepsProps.creatorId}}">
+            <img class="card-img-profile profile rounded float-right img-fluid rounded-circle" :src="keepsProps.creator.picture" alt="">
+          </router-link>
         </div>
       </div>
     </div>
@@ -65,6 +63,11 @@ export default {
   background-image: linear-gradient(#00000011,#0000008f);
   opacity: 95%;
 }
+
+// .card {
+//   display: table;
+//   justify-content: space-around;
+// }
 
 // .card-columns {
 //   @include media-breakpoint-only(lg) {

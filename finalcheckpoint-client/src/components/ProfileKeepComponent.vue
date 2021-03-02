@@ -1,12 +1,17 @@
 <template>
-  <div class="card-column">
+  <div class="row mx-1">
     <div class="card">
       <img class="card-img-top background-img img-fluid rounded" :src="keepsProps.img" alt="Card image" style="width:100%">
       <div class="card-img-overlay">
         <div class="row position-absolute fixed-bottom">
+          <div class="col-12 text-right px-5">
+            <i class="fa fa-trash text-danger" v-if="state.account.id == state.profile.id" @click="deleteKeep()" aria-hidden="true"></i>
+          </div>
           <div class="col-8">
             <p class="keepName float-left text-wrap text-weight-bold ">
-              {{ keepsProps.name }}
+              <b>
+                {{ keepsProps.name }}
+              </b>
             </p>
           </div>
         </div>
@@ -24,15 +29,17 @@ export default {
   props: ['keepsProps'],
   setup(props) {
     const state = reactive({
-      keeps: computed(() => AppState.keeps)
+      keeps: computed(() => AppState.keeps),
+      account: computed(() => AppState.account),
+      profile: computed(() => AppState.activeProfile)
     })
     return {
       state,
 
-      async deleteKeep() {
+      async deleteKeep(keepsProps) {
         const choice = confirm('Are you sure you want to delete this keep? It is irreversible')
         if (choice === true) {
-          keepService.deleteKeep(props.keepProps)
+          keepService.deleteKeep(props.keepsProps)
         } else {
           alert('Keep was not deleted')
         }
@@ -59,6 +66,10 @@ export default {
 .card-img-overlay {
   background-image: linear-gradient(#00000011,#0000008f);
   opacity: 95%;
+}
+
+.card {
+  max-height: 100%
 }
 
 // .card-columns {
