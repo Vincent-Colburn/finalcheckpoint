@@ -60,7 +60,7 @@
                 <div class="col-4 py-5 text-center">
                 </div>
                 <div class="col-2 py-5 text-center">
-                  <i class="fa fa-trash fa-10x " v-if="state.account.id == keepsProps.creatorId" @click="removeFromVault()" aria-hidden="true"></i>
+                  <i class="fa fa-trash fa-lg text-danger" v-if="state.account.id == keepsProps.creatorId" @click="removeFromVault(keepsProps)" aria-hidden="true"></i>
                 </div>
                 <div class="col-5 py-5 text-right d-flex">
                   <router-link :to="{ name: 'ProfileDetailsPage', params: { id: keepsProps.creatorId}}">
@@ -83,11 +83,14 @@
 import { computed, reactive } from 'vue'
 import { AppState } from '../AppState'
 import { accountService } from '../services/AccountService'
+import { vaultKeepService } from '../services/VaultKeepService'
+import { useRoute } from 'vue-router'
 // import { logger } from '../utils/Logger'
 export default {
   name: 'VaultKeepComponent',
   props: ['keepsProps'],
   setup(props) {
+    const route = useRoute()
     const state = reactive({
       keeps: computed(() => AppState.keeps),
       account: computed(() => AppState.account),
@@ -97,8 +100,15 @@ export default {
     return {
       state,
 
-      async removeFromVault() {
-
+      async removeFromVault(keep) {
+        const choice = confirm('Are you sure you want to delete this keep? It is irreversible')
+        if (choice === true) {
+          keep.vaultId = route.params.id
+          vaultKeepService.removeFromVault(keep)
+        } else {
+          alert('Keep was not removed from vault')
+        }
+        // console.log('vaultkeepid', vaultKeepId)
       },
       async getAccount() {
         await accountService.getAccount()

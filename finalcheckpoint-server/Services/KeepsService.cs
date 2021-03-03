@@ -64,15 +64,37 @@ namespace finalcheckpoint_server.Services
         }
 
 
-        internal IEnumerable<VaultKeepViewModel> GetKeepsByVaultId(int vaultId)
+        internal IEnumerable<VaultKeepViewModel> GetKeepsByVaultId(int vaultId, string creatorId)
         {
-            // Vault original = _vrepo.GetById(id);
-            Vault exists = _vrepo.GetById(vaultId);
-            if (exists == null)
+
+            Vault original = _vrepo.GetById(vaultId);
+            if (original.IsPrivate == true)
+            {
+                if (original.CreatorId != creatorId)
+                {
+                    throw new Forbidden("This vault is private");
+                }
+                else
+                {
+                    return _krepo.GetKeepsByVaultId(vaultId);
+                }
+            }
+            else if (original == null)
             {
                 throw new Exception("Invalid Id");
             }
-            return _krepo.GetKeepsByVaultId(vaultId);
+            else
+            {
+                return _krepo.GetKeepsByVaultId(vaultId);
+            }
+
+            // Vault original = _vrepo.GetById(id);
+            // Vault exists = _vrepo.GetById(vaultId);
+            // if (exists == null)
+            // {
+            //     throw new Exception("Invalid Id");
+            // }
+            // return _krepo.GetKeepsByVaultId(vaultId);
 
             // if (original.IsPrivate == false)
             // {

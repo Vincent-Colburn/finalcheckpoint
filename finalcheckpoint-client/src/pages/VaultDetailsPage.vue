@@ -21,6 +21,7 @@ import { vaultKeepService } from '../services/VaultKeepService'
 import { AppState } from '../AppState'
 import { useRoute } from 'vue-router'
 import { vaultService } from '../services/VaultService'
+import { accountService } from '../services/AccountService'
 export default {
   name: 'VaultDetailsPage',
   props: {},
@@ -29,6 +30,7 @@ export default {
     const state = reactive({
       keeps: computed(() => AppState.activeVaultKeeps),
       vault: computed(() => AppState.activeVault),
+      account: computed(() => AppState.account),
       newVaultKeep: {
 
       }
@@ -40,7 +42,12 @@ export default {
         logger.log(error)
       }
       try {
-        await vaultService.getKeepsByVaultId(route.params.id)
+        await vaultService.getKeepsByVaultId(route.params.id, state.account)
+      } catch (error) {
+        logger.log(error)
+      }
+      try {
+        await accountService.getAccount()
       } catch (error) {
         logger.log(error)
       }

@@ -6,7 +6,7 @@ class KeepService {
   async getKeeps() {
     const res = await api.get('/api/keeps')
     AppState.keeps = res.data
-    console.log('these should be your keeps', AppState.keeps)
+    // console.log('these should be your keeps', AppState.keeps)
   }
 
   async getKeepById(id) {

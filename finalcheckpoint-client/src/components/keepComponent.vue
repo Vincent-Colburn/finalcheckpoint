@@ -1,5 +1,9 @@
 <template>
-  <div class="card" data-toggle="modal" data-target="#keepModal" @click="getAccount()">
+  <div class="card"
+       href=""
+       data-toggle="modal"
+       data-target="#KeepModalComponent"
+  >
     <img class="card-img-top background-img rounded" :src="keepsProps.img" alt="" style="width:100%">
     <div class="card-img-overlay">
       <div class="row position-absolute fixed-bottom">
@@ -15,11 +19,13 @@
         </div>
       </div>
     </div>
+    <!-- <KeepModalComponent /> -->
     <!-- Button trigger modal -->
 
     <!-- Modal -->
-    <div class="modal fade"
-         id="keepModal"
+    <!-- <div class="modal fade"
+         id="keepsModal"
+         href="{{keepsProps.id}}"
          tabindex="-1"
          role="dialog"
          aria-labelledby="modelTitleId"
@@ -87,7 +93,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -96,6 +102,7 @@ import { computed, reactive } from 'vue'
 import { AppState } from '../AppState'
 import { keepService } from '../services/KeepService'
 import { accountService } from '../services/AccountService'
+// import $ from 'jquery'
 // import { logger } from '../utils/Logger'
 export default {
   name: 'KeepComponent',
@@ -127,6 +134,14 @@ export default {
     }
   }
 }
+// $('#my_modal').on('show.bs.modal', function(e) {
+//   // get data-id attribute of the clicked element
+//   const keepId = $(e.relatedTarget).data('keep-id')
+//   console.log('this is the keepid', keepId)
+
+//   // populate the textbox
+//   $(e.currentTarget).find('input[name="keepId"]').val(keepId)
+// })
 </script>
 
 <style lang="scss" scoped>

@@ -112,17 +112,27 @@ namespace finalcheckpoint_server.Controllers
 
         [HttpGet("{id}/keeps")]
         // [Authorize]
-        public ActionResult<IEnumerable<Keep>> GetKeeps(int id)
+        public ActionResult<IEnumerable<Keep>> GetKeeps(int id, string creatorId)
         {
             try
             {
-                IEnumerable<Keep> keeps = _ks.GetKeepsByVaultId(id);
+                IEnumerable<Keep> keeps = _ks.GetKeepsByVaultId(id, creatorId);
                 return Ok(keeps);
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
+            // works
+            //  try
+            // {
+            //     IEnumerable<Keep> keeps = _ks.GetKeepsByVaultId(id);
+            //     return Ok(keeps);
+            // }
+            // catch (Exception e)
+            // {
+            //     return BadRequest(e.Message);
+            // }
         }
     }
 }

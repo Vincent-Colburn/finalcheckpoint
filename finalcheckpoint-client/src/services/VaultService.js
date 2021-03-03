@@ -6,6 +6,7 @@ class VaultService {
   async getVaultById(id) {
     const res = await api.get('api/vaults/' + id)
     AppState.activeVault = res.data
+    console.log('over here', res.data)
   }
 
   async createVault(newVault) {
@@ -18,9 +19,19 @@ class VaultService {
     profileService.getVaultsByProfileId(vault.creatorId)
   }
 
-  async getKeepsByVaultId(id) {
-    const res = await api.get('api/vaults/' + id + '/keeps')
+  async getKeepsByVaultId(id, account) {
+    // const vault = this.getVaultById(id)
+    // if (vault.IsPrivate === true) {
+    //   if (vault.creatorId === account.id) {
+    //     const res = await api.get('api/vaults/' + id + '/keeps')
+    //     AppState.activeVaultKeeps = res.data
+    //   } else {
+    //     console.log('you cannot view private vaults')
+    //   }
+    // } else {
+    const res = await api.get('api/vaults/' + id + '/keeps', account)
     AppState.activeVaultKeeps = res.data
+    // }
   }
 }
 export const vaultService = new VaultService()
