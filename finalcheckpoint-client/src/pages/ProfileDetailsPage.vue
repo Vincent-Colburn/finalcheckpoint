@@ -1,10 +1,10 @@
 <template>
   <div class="container-fluid">
-    <div class="row py-5">
-      <div class="col-5  text-right">
+    <div class="row py-3 ">
+      <div class="col-2 offset-5 ml-2">
         <img class="img-fluid profilePicture" :src="state.profile.picture" alt="">
       </div>
-      <div class="col-7">
+      <div class="col-7 text-leftinformation">
         <h1>
           {{ state.profile.name }}
         </h1>
@@ -237,6 +237,14 @@ export default {
 }
 .vaults{
   display: inline-block;
+
+}
+
+.information{
+  margin-top: 20px;
+  margin-right: 500px;
+  padding-right: 600px;
+  text-align: left;
 
 }
 .soSmall{
