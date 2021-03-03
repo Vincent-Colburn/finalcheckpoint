@@ -13,7 +13,7 @@ class VaultKeepService {
 
   async removeFromVault(keep) {
     await api.delete('api/vaultkeeps/' + keep.vaultKeepId)
-    vaultService.getVaultById(keep.vaultId)
+    vaultService.getKeepsVaultById(keep.vaultId)
   }
 }
 

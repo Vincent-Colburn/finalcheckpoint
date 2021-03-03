@@ -78,7 +78,7 @@
                   </div>
                 </div>
                 <div class="col-1  text-right">
-                  <i class="fa fa-trash fa-10x " v-if="state.account.id == keepsProps.creatorId" @click="deleteKeep()" aria-hidden="true"></i>
+                  <i class="fa fa-trash fa-10x " v-if="state.account.id != null" @click="deleteVaultKeep(keepsProps)" aria-hidden="true"></i>
                 </div>
                 <div class="col-6 text-right d-flex">
                   <router-link :to="{ name: 'ProfileDetailsPage', params: { id: keepsProps.creatorId}}">
@@ -104,6 +104,8 @@ import { accountService } from '../services/AccountService'
 import { vaultKeepService } from '../services/VaultKeepService'
 import { useRoute } from 'vue-router'
 // import { logger } from '../utils/Logger'
+// import { vaultService } from '../services/VaultService'
+// import { logger } from '../utils/Logger'
 export default {
   name: 'VaultKeepComponent',
   props: ['keepsProps'],
@@ -113,12 +115,12 @@ export default {
       keeps: computed(() => AppState.keeps),
       account: computed(() => AppState.account),
       profile: computed(() => AppState.activeProfile),
-      vaults: computed(() => AppState.accountVaults)
+      vaults: computed(() => AppState.activeVaults)
     })
     return {
       state,
 
-      async removeFromVault(keep) {
+      async deleteVaultKeep(keep) {
         const choice = confirm('Are you sure you want to delete this keep? It is irreversible')
         if (choice === true) {
           keep.vaultId = route.params.id
