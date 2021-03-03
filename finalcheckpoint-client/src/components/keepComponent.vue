@@ -1,10 +1,6 @@
 <template>
-  <div class="card"
-       href=""
-       data-toggle="modal"
-       data-target="#KeepModalComponent"
-  >
-    <img class="card-img-top background-img rounded" :src="keepsProps.img" alt="" style="width:100%">
+  <div class="item">
+    <img class="img-top background-img rounded" :src="keepsProps.img" alt="" style="width:100%">
     <div class="card-img-overlay">
       <div class="row position-absolute fixed-bottom">
         <div class="col-8">
@@ -163,9 +159,11 @@ export default {
   color: #f9f9fb;
   margin-left: 15px;
 }
-.card-img-overlay {
+.img-overlay {
   background-image: linear-gradient(#00000011,#0000008f);
   opacity: 95%;
+  position: relative;
+  max-width: 500px;
 }
 
 .modal-body{

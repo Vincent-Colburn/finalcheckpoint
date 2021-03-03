@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <!-- <div class="row test"> -->
-    <div class="card-columns">
+    <div class="masonry">
       <KeepComponent v-for="keep in state.keeps" :key="keep.id" :keeps-props="keep" />
     </div>
     <!-- </div> -->
@@ -41,7 +41,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "bootstrap";
+.masonry { /* Masonry container */
+  column-count: 5;
+  column-gap: 1em;
+}
+
+.item { /* Masonry bricks or child elements */
+  background-color: #eee;
+  display: inline-block;
+  margin: 0 0 1em;
+  width: 100%;
+}
+// @import "bootstrap";
 
 // @media (min-width: 992px) {
 //  .card-columns {column-count: 3;}
@@ -51,11 +62,11 @@ export default {
 //    }
 // }
 
-.card-columns {
-  @include media-breakpoint-only(xl) {
-    padding: 20px;
-    column-count: 3;
-  }
+// .card-columns {
+//   @include media-breakpoint-only(xl) {
+//     padding: 20px;
+//     column-count: 3;
+//   }
   // @include media-breakpoint-down(xl) {
   //   display: block;
   // }
@@ -68,7 +79,7 @@ export default {
   // @include media-breakpoint-only(sm) {
   //   column-count: 2;
   // }
-}
+// }
 
 // .card-columns {
 //   column-count: 4;
