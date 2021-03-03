@@ -2,15 +2,17 @@
   <div class="card"
        href=""
        data-toggle="modal"
-       data-target="#KeepModalComponent"
+       :data-target="'#keepsModal' + keepsProps.id"
+       :id="keepsProps.id"
+       @click="getAccount()"
   >
     <img class="card-img-top background-img rounded" :src="keepsProps.img" alt="" style="width:100%">
     <div class="card-img-overlay">
       <div class="row position-absolute fixed-bottom">
         <div class="col-8">
-          <p class="keepName float-left text-wrap text-weight-bold ">
+          <h4 class="keepName py-4 float-left text-wrap text-weight-bold ">
             {{ keepsProps.name }}
-          </p>
+          </h4>
         </div>
         <div class="col-4 float-right">
           <router-link :to="{ name: 'ProfileDetailsPage', params: { id: keepsProps.creatorId}}">
@@ -23,9 +25,8 @@
     <!-- Button trigger modal -->
 
     <!-- Modal -->
-    <!-- <div class="modal fade"
-         id="keepsModal"
-         href="{{keepsProps.id}}"
+    <div class="modal fade"
+         :id="'keepsModal' + keepsProps.id"
          tabindex="-1"
          role="dialog"
          aria-labelledby="modelTitleId"
@@ -37,8 +38,8 @@
             <span aria-hidden="true">&times;</span>
           </button>
           <div class="row">
-            <div class="col-6 imgModal pt-0 pb-4 ml-3 py-0">
-              <img class="rounded" :src="keepsProps.img" alt="" style="width:100%">
+            <div class="col-6 imgModal ">
+              <img class="rounded img-fluid" :src="keepsProps.img" alt="" style="width:100%">
             </div>
             <div class="col-5 mr-5">
               <div class="row">
@@ -62,9 +63,9 @@
               </div>
               <div class="col-12">
               </div>
-              <div class="row bottomKeepModal py-5">
-                <div class="col-4 py-5 text-center">
-                  <div class="dropdown text-success border">
+              <div class="row  bottomKeepModal">
+                <div class="col-5 dropDown text-center">
+                  <div class="dropdown text-success border border-success">
                     <button class="btn toggler dropdown-toggle button text-success"
                             type="button"
                             id="dropdownMenuButton"
@@ -77,14 +78,14 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-2 py-5 text-center">
+                <div class="col-1 text-right">
                   <i class="fa fa-trash fa-10x " v-if="state.account.id == keepsProps.creatorId" @click="deleteKeep()" aria-hidden="true"></i>
                 </div>
-                <div class="col-5 py-5 text-right d-flex">
+                <div class="col-6 text-right d-flex">
                   <router-link :to="{ name: 'ProfileDetailsPage', params: { id: keepsProps.creatorId}}">
                     <img class="card-img-profile profile rounded img-fluid" :src="keepsProps.creator.picture" alt="">
                   </router-link>
-                  <h5 class="">
+                  <h5 class="text-left py-2">
                     {{ keepsProps.creator.name }}
                   </h5>
                 </div>
@@ -93,7 +94,7 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -147,6 +148,10 @@ export default {
 <style lang="scss" scoped>
 @import "bootstrap";
 
+.imgModal {
+  padding-left: 25px;
+  padding-bottom: 15px;
+}
 .modal-dialog {
   max-width: 1500px;
   padding-top: 250px;
@@ -168,9 +173,9 @@ export default {
   opacity: 95%;
 }
 
-.modal-body{
-  display: inline-block;
-}
+// .modal-body{
+//   display: ;
+// }
 .eye{
   justify-content: right;
   align-items: right;
@@ -179,14 +184,21 @@ export default {
 }
 
 .bottomKeepModal{
-  margin-left: 30px;
-  margin-top: 80px;
+  margin-left: 100px;
+  margin-top: 290px;
   margin-bottom: 0px;
 }
-
-.imgModal{
-  padding-top: 100px;
+.modal {
+  padding: 0;
 }
+.dropDown{
+  justify-content: left;
+  align-items: left;
+}
+
+// .imgModal{
+//   padding-top: 0px;
+// }
 // .card {
 //   display: table;
 //   justify-content: space-around;

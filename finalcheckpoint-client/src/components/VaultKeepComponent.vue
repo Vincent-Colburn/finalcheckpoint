@@ -1,5 +1,11 @@
 <template>
-  <div class="card" data-toggle="modal" data-target="#keepModal" @click="getAccount()">
+  <div class="card"
+       href=""
+       data-toggle="modal"
+       :data-target="'#keepsModal' + keepsProps.id"
+       :id="keepsProps.id"
+       @click="getAccount()"
+  >
     <img class="card-img-top background-img rounded" :src="keepsProps.img" alt="" style="width:100%">
     <div class="card-img-overlay">
       <div class="row position-absolute fixed-bottom">
@@ -19,7 +25,7 @@
 
     <!-- Modal -->
     <div class="modal fade"
-         id="keepModal"
+         :id="'keepsModal' + keepsProps.id"
          tabindex="-1"
          role="dialog"
          aria-labelledby="modelTitleId"
@@ -30,9 +36,9 @@
           <button type="button" class="close text-right" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <div class="row">
+          <div class="row bottomRow">
             <div class="col-6 imgModal pt-0 pb-4 ml-3 py-0">
-              <img class="rounded" :src="keepsProps.img" alt="" style="width:100%">
+              <img class="rounded img-fluid" :src="keepsProps.img" alt="" style="width:100%">
             </div>
             <div class="col-5 mr-5">
               <div class="row">
@@ -56,17 +62,29 @@
               </div>
               <div class="col-12">
               </div>
-              <div class="row bottomKeepModal py-5">
-                <div class="col-4 py-5 text-center">
+              <div class="row d-flex bottomKeepModal">
+                <div class="col-5 text-center">
+                  <div class="dropdown mr-0 text-success border border-success">
+                    <button class="btn toggler dropdown-toggle button text-success"
+                            type="button"
+                            id="dropdownMenuButton"
+                            data-toggle="dropdown"
+                    >
+                      ADD TO VAULT:
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="drowpdownMenuButton">
+                      <DropdownComponent v-for="vault in state.vaults" :key="vault.id" :vaults-props="vault" :keeps-props="keepsProps" />
+                    </div>
+                  </div>
                 </div>
-                <div class="col-2 py-5 text-center">
-                  <i class="fa fa-trash fa-lg text-danger" v-if="state.account.id == keepsProps.creatorId" @click="removeFromVault(keepsProps)" aria-hidden="true"></i>
+                <div class="col-1  text-right">
+                  <i class="fa fa-trash fa-10x " v-if="state.account.id == keepsProps.creatorId" @click="deleteKeep()" aria-hidden="true"></i>
                 </div>
-                <div class="col-5 py-5 text-right d-flex">
+                <div class="col-6 text-right d-flex">
                   <router-link :to="{ name: 'ProfileDetailsPage', params: { id: keepsProps.creatorId}}">
                     <img class="card-img-profile profile rounded img-fluid" :src="keepsProps.creator.picture" alt="">
                   </router-link>
-                  <h5 class="">
+                  <h5 class="text-left py-2">
                     {{ keepsProps.creator.name }}
                   </h5>
                 </div>
@@ -145,24 +163,29 @@ export default {
   opacity: 95%;
 }
 
-.modal-body{
-  display: inline-block;
+.bottomKeepModal{
+  margin-left: 100px;
+  margin-top: 300px;
+  margin-bottom: 0px;
 }
+.modal {
+  padding: 0;
+}
+.imgModal {
+  padding: 0px;
+  padding-left: 10px;
+  padding-bottom: 30px;
+}
+.modal-dialog {
+  max-width: 1500px;
+  padding-top: 250px;
+}
+
 .eye{
   justify-content: right;
   align-items: right;
   margin-right: 0px;
   margin-left: 300px;
-}
-
-.bottomKeepModal{
-  margin-left: 30px;
-  margin-top: 80px;
-  margin-bottom: 0px;
-}
-
-.imgModal{
-  padding-top: 100px;
 }
 // .card {
 //   display: table;
