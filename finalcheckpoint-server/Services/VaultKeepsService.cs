@@ -84,7 +84,7 @@ namespace finalcheckpoint_server.Services
             if (original == null) { throw new Exception("Bad Id"); }
             if (original.CreatorId != userId) { throw new Forbidden("Access Denied: You are not the original creator"); }
             _repo.Delete(id);
-            return "Delete Successful";
+            return "Deleted Successfully";
         }
     }
 }

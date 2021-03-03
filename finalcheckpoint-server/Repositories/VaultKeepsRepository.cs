@@ -49,10 +49,10 @@ namespace finalcheckpoint_server.Repositories
             return _db.ExecuteScalar<int>(sql, newVau);
         }
 
-        internal int Delete(int id)
+        internal void Delete(int id)
         {
-            string sql = "DELETE FROM vaultkeeps WHERE id = @id LIMIT 1";
-            return _db.Execute(sql, new { id });
+            string sql = "DELETE FROM vaultkeeps WHERE id = @id LIMIT 1;";
+            _db.Execute(sql, new { id });
         }
     }
 }

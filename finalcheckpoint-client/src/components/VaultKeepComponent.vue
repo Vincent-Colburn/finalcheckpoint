@@ -4,7 +4,7 @@
        data-toggle="modal"
        :data-target="'#keepsModal' + keepsProps.id"
        :id="keepsProps.id"
-       @click="getAccount()"
+       @click="getVaultById(), getAccount()"
   >
     <img class="card-img-top background-img rounded" :src="keepsProps.img" alt="" style="width:100%">
     <div class="card-img-overlay">
@@ -104,7 +104,7 @@ import { accountService } from '../services/AccountService'
 import { vaultKeepService } from '../services/VaultKeepService'
 import { useRoute } from 'vue-router'
 // import { logger } from '../utils/Logger'
-// import { vaultService } from '../services/VaultService'
+import { vaultService } from '../services/VaultService'
 // import { logger } from '../utils/Logger'
 export default {
   name: 'VaultKeepComponent',
@@ -115,7 +115,8 @@ export default {
       keeps: computed(() => AppState.keeps),
       account: computed(() => AppState.account),
       profile: computed(() => AppState.activeProfile),
-      vaults: computed(() => AppState.activeVaults)
+      vaults: computed(() => AppState.activeVaults),
+      vault: computed(() => AppState.activeVault)
     })
     return {
       state,
@@ -135,6 +136,9 @@ export default {
         if (state.account != null) {
           await accountService.getVaults(state.account.id)
         } else await accountService.getAccount()
+      },
+      async getVaultById() {
+        await vaultService.getVaultById(route.params.id)
       }
     }
   }

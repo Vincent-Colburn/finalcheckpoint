@@ -84,12 +84,12 @@ namespace finalcheckpoint_server.Controllers
             try
             {
                 string worked = _service.Delete(id, userInfo.Id);
-                if (worked != null)
-                {
-                    _ks.DecreaseKeeps(id);
-                }
+                // if (worked != null)
+                // {
+                //     // _ks.DecreaseKeeps(id);
+                // }
 
-                return worked;
+                return Ok(worked);
             }
             catch (Forbidden e)
             {

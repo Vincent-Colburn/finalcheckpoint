@@ -37,17 +37,17 @@ export default {
     })
     onMounted(async() => {
       try {
+        await accountService.getAccount()
+      } catch (error) {
+        logger.log(error)
+      }
+      try {
         await vaultService.getVaultById(route.params.id)
       } catch (error) {
         logger.log(error)
       }
       try {
         await vaultService.getKeepsByVaultId(route.params.id, state.account)
-      } catch (error) {
-        logger.log(error)
-      }
-      try {
-        await accountService.getAccount()
       } catch (error) {
         logger.log(error)
       }
