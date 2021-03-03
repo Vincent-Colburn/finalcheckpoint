@@ -10,9 +10,9 @@
     <div class="card-img-overlay">
       <div class="row position-absolute fixed-bottom">
         <div class="col-8">
-          <p class="keepName float-left text-wrap text-weight-bold ">
+          <h3 class="keepName py-5 float-left text-wrap text-weight-bold ">
             {{ keepsProps.name }}
-          </p>
+          </h3>
         </div>
         <div class="col-4 float-right">
           <router-link :to="{ name: 'ProfileDetailsPage', params: { id: keepsProps.creatorId}}">
