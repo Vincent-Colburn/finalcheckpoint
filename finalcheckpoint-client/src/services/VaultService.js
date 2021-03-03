@@ -11,7 +11,7 @@ class VaultService {
 
   async createVault(newVault) {
     const res = await api.post('api/vaults', newVault)
-    this.getVaultById(res.id)
+    profileService.getVaultsByProfileId(res.data.creatorId)
   }
 
   async deleteVault(vault) {

@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <div class="row py-5">
-      <div class="col-3 py-3  text-right">
+      <div class="col-5  text-right">
         <img class="img-fluid profilePicture" :src="state.profile.picture" alt="">
       </div>
       <div class="col-7">
@@ -85,7 +85,7 @@
       </div>
     </div>
     <div class="container-fluid">
-      <div class="row d-flex vaults">
+      <div class="row d-flex mx-0 my-1 vaults">
         <VaultComponent v-for="vault in state.vaults" :key="vault.id" :vaults-props="vault" />
       </div>
     </div>

@@ -15,8 +15,8 @@ class KeepService {
   }
 
   async createKeep(keepData) {
-    await api.post('api/keeps', keepData)
-    this.getKeeps()
+    const res = await api.post('api/keeps', keepData)
+    profileService.getKeepsByProfileId(res.data.creatorId)
   }
 
   async editKeep(keep) {

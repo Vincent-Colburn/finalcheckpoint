@@ -6,8 +6,8 @@ import { vaultService } from './VaultService'
 class VaultKeepService {
   async createVaultKeep(vaultId, keepId) {
     const newVaultKeep = { vaultId, keepId }
-    const res = await api.post('api/vaultkeeps', newVaultKeep)
-    console.log('this is your new vaultkeep', res)
+    await api.post('api/vaultkeeps', newVaultKeep)
+    // console.log('this is your new vaultkeep', res)
     vaultService.getVaultById(newVaultKeep.vaultId)
   }
 

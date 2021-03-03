@@ -59,8 +59,7 @@ export default {
         try {
           const choice = confirm('Are you sure you want to remove this Keep from the vault?')
           if (choice === true) {
-            vaultKeepService.createVaultKeep(state.newVaultKeep)
-            state.newVaultKeep = {}
+            vaultKeepService.removeFromVault()
           } else {
             alert('The keep has not been removed from the vault')
           }

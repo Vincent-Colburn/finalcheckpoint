@@ -1,9 +1,9 @@
 <template>
-  <div class="col-2">
+  <div class="col-1 mb-4">
     <router-link :to="{name: 'VaultDetailsPage', params: {id: vaultsProps.id}}">
       <div class="card vaultCard rounded">
         <div class="card-top text-right">
-          <i class="fa fa-trash text-danger" v-if="state.account.id == state.profile.id" @click="deleteVault()" aria-hidden="true"></i>
+          <i class="fa fa-trash text-danger" v-if="state.account.id == state.profile.id" @click.prevent="deleteVault()" aria-hidden="true"></i>
         </div>
         <div class="card-body">
           <h4 class="card-title vaultName fixed-bottom mx-2">
@@ -35,11 +35,11 @@ export default {
       state,
 
       async deleteVault(vaultsProp) {
-        const choice = confirm('Are you sure you want to delete this keep? It is irreversible')
+        const choice = confirm('Are you sure you want to delete this vault? It is irreversible')
         if (choice === true) {
           vaultService.deleteVault(props.vaultsProps)
         } else {
-          alert('Keep was not deleted')
+          alert('Vault was not deleted')
         }
       }
     }
