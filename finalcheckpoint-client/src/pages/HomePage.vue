@@ -54,7 +54,7 @@ export default {
 .card-columns {
   @include media-breakpoint-only(xl) {
     padding: 20px;
-    column-count: 3;
+    column-count: 4;
   }
   // @include media-breakpoint-down(xl) {
   //   display: block;
