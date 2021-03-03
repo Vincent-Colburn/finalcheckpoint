@@ -2,10 +2,13 @@
   <div class="container-fluid">
     <div class="row py-5 mx-4">
       <div class="col-12">
-        <h1> Why Hello There.</h1>
+        <h1> {{ state.vault.name }}</h1>
       </div>
-      <div class="col-12 mx-1">
+      <div class="col-12">
         <h5> Keeps: {{ state.keeps.length }}</h5>
+      </div>
+      <div class="card-columns">
+        <VaultKeepComponent v-for="keep in state.keeps" :key="keep.id" :keeps-props="keep" />
       </div>
     </div>
   </div>
@@ -25,6 +28,7 @@ export default {
     const route = useRoute()
     const state = reactive({
       keeps: computed(() => AppState.activeVaultKeeps),
+      vault: computed(() => AppState.activeVault),
       newVaultKeep: {
 
       }

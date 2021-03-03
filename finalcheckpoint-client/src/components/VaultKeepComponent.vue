@@ -58,21 +58,9 @@
               </div>
               <div class="row bottomKeepModal py-5">
                 <div class="col-4 py-5 text-center">
-                  <div class="dropdown text-success border">
-                    <button class="btn toggler dropdown-toggle button text-success"
-                            type="button"
-                            id="dropdownMenuButton"
-                            data-toggle="dropdown"
-                    >
-                      ADD TO VAULT:
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="drowpdownMenuButton">
-                      <DropdownComponent v-for="vault in state.vaults" :key="vault.id" :vaults-props="vault" :keeps-props="keepsProps" />
-                    </div>
-                  </div>
                 </div>
                 <div class="col-2 py-5 text-center">
-                  <i class="fa fa-trash fa-10x " v-if="state.account.id == keepsProps.creatorId" @click="deleteKeep()" aria-hidden="true"></i>
+                  <i class="fa fa-trash fa-10x " v-if="state.account.id == keepsProps.creatorId" @click="removeFromVault()" aria-hidden="true"></i>
                 </div>
                 <div class="col-5 py-5 text-right d-flex">
                   <router-link :to="{ name: 'ProfileDetailsPage', params: { id: keepsProps.creatorId}}">
@@ -94,11 +82,10 @@
 <script>
 import { computed, reactive } from 'vue'
 import { AppState } from '../AppState'
-import { keepService } from '../services/KeepService'
 import { accountService } from '../services/AccountService'
 // import { logger } from '../utils/Logger'
 export default {
-  name: 'KeepComponent',
+  name: 'VaultKeepComponent',
   props: ['keepsProps'],
   setup(props) {
     const state = reactive({
@@ -110,13 +97,8 @@ export default {
     return {
       state,
 
-      async deleteKeep() {
-        const choice = confirm('Are you sure you want to delete this keep? It is irreversible')
-        if (choice === true) {
-          keepService.deleteKeep(props.keepProps)
-        } else {
-          alert('Keep was not deleted')
-        }
+      async removeFromVault() {
+
       },
       async getAccount() {
         await accountService.getAccount()

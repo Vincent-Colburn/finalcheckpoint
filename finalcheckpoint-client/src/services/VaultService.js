@@ -20,7 +20,7 @@ class VaultService {
 
   async getKeepsByVaultId(id) {
     const res = await api.get('api/vaults/' + id + '/keeps')
-    AppState.vaultKeeps = res.data
+    AppState.activeVaultKeeps = res.data
   }
 }
 export const vaultService = new VaultService()

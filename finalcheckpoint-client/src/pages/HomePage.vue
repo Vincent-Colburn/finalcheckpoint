@@ -14,6 +14,7 @@ import { computed, onMounted, reactive } from 'vue'
 import { AppState } from '../AppState'
 import { keepService } from '../services/KeepService'
 import { logger } from '../utils/Logger'
+// import { profileService } from '../services/ProfileService'
 export default {
   name: 'Home',
   props: {
@@ -22,7 +23,9 @@ export default {
   setup(props) {
     // const router = useRouter()
     const state = reactive({
-      keeps: computed(() => AppState.keeps)
+      keeps: computed(() => AppState.keeps),
+      account: computed(() => AppState.account),
+      vaults: computed(() => AppState.accountVaults)
     })
 
     onMounted(async() => {
